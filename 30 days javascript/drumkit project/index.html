@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drum kit project</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    
+    <div class="keys">
+        <div data-key="65" class="key">
+            <kbd>A</kbd>
+            <span class="sound">clap</span>
+        </div>
+        <div data-key="83" class="key">
+            <kbd>S</kbd>
+            <span class="sound">hit-hat</span>
+        </div>
+        <div data-key="68" class="key">
+            <kbd>D</kbd>
+            <span class="sound">kick</span>
+        </div>
+        <div data-key="70" class="key">
+            <kbd>F</kbd>
+            <span class="sound">open-hat</span>
+        </div>
+        <div data-key="71" class="key">
+            <kbd>G</kbd>
+            <span class="sound">boom</span>
+        </div>
+        <div data-key="72" class="key">
+            <kbd>H</kbd>
+            <span class="sound">ride</span>
+        </div>
+        <div data-key="74" class="key">
+            <kbd>J</kbd>
+            <span class="sound">snare</span>
+        </div>
+        <div data-key="75" class="key">
+            <kbd>K</kbd>
+            <span class="sound">tom</span>
+        </div>
+        <div data-key="76" class="key">
+            <kbd>L</kbd>
+            <span class="sound">tink</span>
+        </div>
+
+        <audio data-key="65" src="sounds/clap.wav"></audio>
+        <audio data-key="83" src="sounds/hihat.wav"></audio>
+        <audio data-key="68" src="sounds/kick.wav"></audio>
+        <audio data-key="70" src="sounds/openhat.wav"></audio>
+        <audio data-key="71" src="sounds/boom.wav"></audio>
+        <audio data-key="72" src="sounds/ride.wav"></audio>
+        <audio data-key="74" src="sounds/snare.wav"></audio>
+        <audio data-key="75" src="sounds/tom.wav"></audio>
+        <audio data-key="76" src="sounds/tink.wav"></audio>
+
+    </div>
+
+    <script>
+        // listen the key down event
+        window.addEventListener("keydown" , PlaySound)
+        function PlaySound(e){
+            // console.log(e.keyCode);// to just print out which key we are pressing
+            // for selecting the element audio - that have data-key of different values
+            const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`); 
+            // used the data attribute selector => element[data-attribute="selected value"]
+            // used the template literals - why double quotes around the selected keycode 
+            // because it is a selected value and as in css too the selected data attribute and in double quotes the attribute value will be taken 
+            console.log(audio);
+            const key = document.querySelector(`.key[data-key="${e.keyCode}"]`)// selecting with the class related to key
+            if(!audio) return; // stop the function from running all together // if audio is not present
+            // to repeat the audio or change - rewind it to the start of the element so if you hit it in succession again and again - it will rewind to the start
+            audio.currentTime = 0; // rewind t0 the start 
+            audio.play(); // but the audio takes time - and if you call before that finishes the new audio wont play it wont shift to new one - no matter how many times you hit the key
+            // for animation to add - we need to add a playing class to the selected keys elements - with add class list 
+            key.classList.add('playing');
+            // you can use settimeout but if the transition in the css changes you will have to change the time here too in javascript to remove the class
+            // for this reason use transition end event - that will fire once the thing is stopped animating itself
+            // this is same like click function to run when clicked - but instead of when clicked it runs if the element is transitioned
+            // for that listen on each key when transition happened
+            
+        };
+
+        // this is out of the window function
+        function removeTransition(e){
+            // console.log(e);// shows bunch of transition end events - because alot of transition happpened here 
+            if(e.propertyName !== 'transform') return; // skip it if its not a transform
+            // console.log(e.propertyName);
+            // this - this is always equal to what calls against it or the data it is holding by taking from an object or array of data - as the ecommerce app
+            // console.log(this); // will give the element we press - and the data it holding
+            // it will remove the class from selected element 
+            /*
+            this is usually take the value from the object it is taking the data from 
+            such as if in our case key.addEventListener('',func)- so if we use the this in the func 
+            the value of the this. will be equal to the selected element correspond to the key object/array we take
+            */
+            this.classList.remove('playing');
+
+        }
+
+        const keys = document.querySelectorAll('.key'); // gives an array of every single element that is matched
+        keys.forEach( key => key.addEventListener('transitionend', removeTransition));
+
+        // key.classList.remove('playing');
+        // key.classList.toggle('playing');
+
+
+    </script>
+</body>
+</html>

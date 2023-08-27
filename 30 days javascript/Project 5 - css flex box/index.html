@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Css Flex gallery with javascript</title>
+</head>
+<body>
+    <!-- flex gallery -->
+    <!-- the flex box panel - leans heavily on css -->
+    <!-- we will write the flex box part in it - this is some basic styling -->
+    <style>
+        html {
+          box-sizing: border-box;
+          background: #ffc600;
+          font-family: 'helvetica neue';
+          font-size: 20px;
+          font-weight: 200;
+        }
+    
+        body {
+          margin: 0;
+        }
+    
+        *, *:before, *:after {
+          box-sizing: inherit;
+        }
+    
+        .panels {
+            /* to display as flex - side by side instead of up down - first action */
+            display: flex; 
+            min-height: 100vh;
+            overflow: hidden;
+        }
+    
+        .panel {
+          background: #6B0F9C;
+          box-shadow: inset 0 0 0 5px rgba(255,255,255,0.1);
+          color: white;
+          text-align: center;
+          align-items: center;
+          /* Safari transitionend event.propertyName === flex */
+          /* Chrome + FF transitionend event.propertyName === flex-grow */
+          transition:
+            font-size 0.7s cubic-bezier(0.61,-0.19, 0.7,-0.11),
+            flex 0.7s cubic-bezier(0.61,-0.19, 0.7,-0.11),
+            background 0.2s;
+          font-size: 20px;
+          background-size: cover;
+          background-position: center;
+          /* each of the them evenly going to distribute extra space between them - action two */
+          flex: 1;
+          /* to have the items inside the box vertically and horizontally in center - action four */
+          justify-content:center ;
+            align-items: center;
+            /* this is the part where you next flex box - flex within flex - flex container and item - action five
+            in css a flex selected element can be a flex item as well as container - means it can be a item for the parent flex class but can also act as a parent for the element within it
+            */
+            display: flex;
+            flex-direction: column;
+        }
+    
+        .panel1 { background-image:url(https://source.unsplash.com/gYl-UtwNg_I/1500x1500); }
+        .panel2 { background-image:url(https://source.unsplash.com/rFKUFzjPYiQ/1500x1500); }
+        .panel3 { background-image:url(https://images.unsplash.com/photo-1465188162913-8fb5709d6d57?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&cs=tinysrgb&w=1500&h=1500&fit=crop&s=967e8a713a4e395260793fc8c802901d); }
+        .panel4 { background-image:url(https://source.unsplash.com/ITjiVXcwVng/1500x1500); }
+        .panel5 { background-image:url(https://source.unsplash.com/3MNzGlQM7qs/1500x1500); }
+    
+        /* Flex Children */
+        .panel > * {
+          margin: 0;
+          width: 100%;
+          transition: transform 0.5s;
+           /* to put border around all the boxes to see whats going on - action three*/
+          border: 1px solid red;
+          /* action six - to give every element a equal space within the element box*/
+          flex: 1 0 auto;
+          /* to get everything perfectly centered - flexbox within flexbox within flexbox - very high nesting*/
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+    
+        /* this is to hide the child of the box to show with javascript - action seven*/
+        .panel > *:first-child {
+            /* * star is used to select every single panel element  */
+            /* the idea is to when we remove this translation the child elements will show with on page with animation */
+            /* learn transform property to do the navbar things */
+            transform: translateY(-100%);
+             /* need to know why this property and calculation to translate apply - -100% in my mind should take the element related to class to the bottom not at top */
+        }
+        .panel > *:last-child {
+          /* translate is not moving the box but its action like the margin if you give translate y then it will give space from the origin or the selected of the parent element as reference 
+          and then it will give space from that - so if give x axis its actually giving the space from the origin of the element and not moving the object in that direction
+          thats why on y axis if you put positive it moves down rather than up - it just doesn't seem that obvious when we are on x axis but too apparent when on y axis  */
+            /* learn transform property to do the navbar things */
+            transform: translateY(100%);
+        }
+        .panel p {
+          text-transform: uppercase;
+          font-family: 'Amatic SC', cursive;
+          text-shadow: 0 0 4px rgba(0, 0, 0, 0.72), 0 0 14px rgba(0, 0, 0, 0.45);
+          font-size: 2em;
+        }
+    
+        .panel p:nth-child(2) {
+          font-size: 4em;
+        }
+    
+        .panel.open {
+          font-size: 40px;
+        }
+    
+      </style>
+    
+    
+      <div class="panels">
+        <div class="panel panel1">
+          <p>Hey</p>
+          <p>Let's</p>
+          <p>Dance</p>
+        </div>
+        <div class="panel panel2">
+          <p>Give</p>
+          <p>Take</p>
+          <p>Receive</p>
+        </div>
+        <div class="panel panel3">
+          <p>Experience</p>
+          <p>It</p>
+          <p>Today</p>
+        </div>
+        <div class="panel panel4">
+          <p>Give</p>
+          <p>All</p>
+          <p>You can</p>
+        </div>
+        <div class="panel panel5">
+          <p>Life</p>
+          <p>In</p>
+          <p>Motion</p>
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- javascript code  -->
+    <script>
+
+    </script>
+</body>
+</html>
